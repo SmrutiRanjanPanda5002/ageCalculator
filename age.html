@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>age_calculator</title>
+    <link rel="stylesheet" href="age.css"> <!-- Fixed closing tag -->
+</head>
+<body>
+    <div class="container">
+        <div class="calculator"> 
+            <h1>javaScript <span>Age calculator</span></h1>
+        </div>  
+        <div class="input-box">
+            <input type="date" id="date">
+            <button onclick="CalculateAge()" class="button1">Calculate!</button>
+        </div>
+        <p id="result"></p>
+    </div>
+   
+    <script>
+    let userInput = document.getElementById("date");
+    userInput.max = new Date().toISOString().split("T")[0]; // Fixed typo "DAte" to "Date"
+    let result = document.getElementById("result"); // Fixed typo "Document" to "document"
+
+    // Age Calculating function create
+    function CalculateAge(){
+        let birthDate = new Date(userInput.value);
+
+        let d1 = birthDate.getDate();
+        let m1 = birthDate.getMonth();
+        let y1 = birthDate.getFullYear();
+
+        let today = new Date();
+
+        let d2 = today.getDate();
+        let m2 = today.getMonth();
+        let y2 = today.getFullYear();
+
+        // To save the Difference
+        let d3, m3, y3;
+        y3 = y2 - y1;
+        if (m2 >= m1){
+            m3 = m2 - m1;
+        }
+        else {
+            y3--;
+            m3 = 12 + m2 - m1;
+        }
+        if (d2 >= d1){
+            d3 = d2 - d1;
+        }
+        else {
+            m3--;
+            d3 = getDateInMonth(y1, m1) + d2 - d1;
+        }
+        if (m3 < 0){
+            m3 = 11;
+            y3--;
+        }
+        result.innerHTML = `You are <span>${y3}</span> Years, <span>${m3}</span> Months and <span>${d3}</span> Days old`; // Corrected string interpolation
+        console.log(y3, m3, d3);
+    }
+
+    function getDateInMonth(year, month){ // Added parameters year and month
+        return new Date(year, month + 1, 0).getDate(); // Corrected month to month + 1
+    }
+    </script>
+</body>
+</html>
